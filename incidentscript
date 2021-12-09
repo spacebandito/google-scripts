@@ -1,0 +1,35 @@
+function autoFillGoogleDocFromForm(e){
+
+  var timestamp = e.values[0];
+  var submitter = e.values[1];
+  var whodid = e.values[3]
+  var incidentdate = e.values[2];
+  var location = e.values[4];
+  var summary = e.values[5];
+  var actiontaken = e.values[6];
+  var filelink = e.values[7];
+  var needfollowup = e.values[8];
+  var whatfollowup = e.values[9];
+  
+  var file = DriveApp.getFileById('redacted'); 
+  
+  var folder = DriveApp.getFolderById('redacted')
+  var copy = file.makeCopy('Incident Report' + timestamp, folder); 
+
+  var doc = DocumentApp.openById(copy.getId()); 
+  
+  var body = doc.getBody(); 
+  
+  body.replaceText('{{timestamp}}', timestamp); 
+  body.replaceText('{{submitter}}', submitter);  
+  body.replaceText('{{whodid}}', whodid);
+  body.replaceText('{{incidentdate}}', incidentdate); 
+  body.replaceText('{{location}}', location);
+  body.replaceText('{{summary}}', summary);
+  body.replaceText('{{actiontaken}}', actiontaken);
+  body.replaceText('{{filelink}}', filelink);
+  body.replaceText('{{needfollowup}}', needfollowup);
+  body.replaceText('{{whatfollowup}}', whatfollowup);
+  
+  doc.saveAndClose(); 
+}
